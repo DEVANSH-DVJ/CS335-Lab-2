@@ -1,2 +1,3 @@
-# CS335-Lab-2
-Lab 2, Artificial Intelligence and Machine Learning, Autumn 2021, IIT Bombay
+# CS335 Lab 2
+Given on: 27/08/2021, 00:10  
+Due on: Friday, 12/09/2021, 23:59
