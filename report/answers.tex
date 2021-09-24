@@ -12,7 +12,7 @@
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
 \usepackage{sectsty}
-\renewcommand{\thesubsubsection}{(\alph{subsubsection})}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}.}
 
 \usepackage[dvipsnames]{xcolor}
 \usepackage[perpage]{footmisc}
@@ -43,6 +43,89 @@
 \setcounter{page}{0}
 
 \newpage
-~
+\section{Perceptron}
+\subsection{CS 337: Theory}
+\subsubsection{}
+Both 1-vs-1 and 1-vs-rest approach use binary classification algorithm. \\
+1-vs-rest has K classifiers - one for each class. \\
+1-vs-1 has K(K-1)/2 classifiers - one for each pair of classes. \\
+In 1-vs-rest, each classifier predicts score (probability) and the class with highest score is chosen. \\
+In 1-vs-1, each classifier predicts one class and the class which has been predicted the most is chosen. \\
+
+\underline{Advantages and Disadvantages} \\
+Single classifier in 1-vs-1 uses subset of data, so each classifier is faster for 1-vs-1. \\
+1-vs-rest trains less number of classifiers and hence is faster overall. \\
+1-vs-1 is less prone to imbalance in dataset due to dominance in specific classes.
+
+\subsubsection{}
+\begin{equation*}
+  \begin{aligned}
+    score(f, y) & = \sum_i f_i {w_y}_i \\
+                & = f^T w_y
+  \end{aligned}
+\end{equation*}
+\begin{equation*}
+  \begin{aligned}
+    score(f, y)_{new} & = f^T {w_y}_{new}             \\
+                      & = f^T {w_y}_{old} + f^T f     \\
+                      & = f^T {w_y}_{old} + ||f||_2^2 \\
+                      & \ge f^T {w_y}_{old}           \\
+                      & \ge score(f, y)_{old}
+  \end{aligned}
+\end{equation*}
+\begin{equation*}
+  \begin{aligned}
+    score(f, y')_{new} & = f^T {w_{y'}}_{new}             \\
+                       & = f^T {w_{y'}}_{old} - f^T f     \\
+                       & = f^T {w_{y'}}_{old} - ||f||_2^2 \\
+                       & \le f^T {w_{y'}}_{old}           \\
+                       & \le score(f, y')_{old}
+  \end{aligned}
+\end{equation*}
+
+\subsubsection{}
+\begin{equation*}
+  \begin{aligned}
+    \mathcal{L}(f, y)          & = max(0, -y f^T w) \\
+    \nabla_w \mathcal{L}(f, y) & =
+    \begin{cases}
+      0    & \text{if $y f^T w \ge 0$}                            \\
+      -y f & \text{if $y f^T w < 0$, i.e. point is misclassified}
+    \end{cases}
+  \end{aligned}
+\end{equation*}
+Gradient descent update:
+\begin{equation*}
+  \begin{aligned}
+    w^{(k+1)} & = w^{(k)} - \eta \nabla_w \mathcal{L}(f, y) \\
+    w^{(k+1)} & =
+    \begin{cases}
+      w^{(k)}            & \text{if $y f^T w \ge 0$}                            \\
+      w^{(k)} + \eta y f & \text{if $y f^T w < 0$, i.e. point is misclassified}
+    \end{cases}
+  \end{aligned}
+\end{equation*}
+
+We can see that the gradient descent update rule is similar to perceptron update rule. \\
+Using the fact that the perceptron update rule converges for linearly separable dataset, we can conclude that gradient descent algorithm also converges for linearly separable dataset. \\
+
+P.S. The loss function takes into account only a single data point. To be precise, we are doing stochastic gradient descent here.
+
+\subsubsection{}
+In proof of the convergence theorem, if we use $\eta = 0.5$. \\
+We get $\sqrt{k} r \ge ||w^{(k)}||_2 \ge u^T w^{(k)} \ge k \eta \gamma$. \\
+Thus, $k \le \dfrac{r^2}{\eta^2 \gamma^2}$. \\
+Upper bound on number of iterations under the modified algorithm is 4M. \\
+
+\underline{Alt}: \\
+If we do double update at every step, i.e. take the same point again for every misclassification. It would be equivalent to original perceptron, so number of iterations would be 2M. \\
+This is possible only if we chose the points in this fashion.
+
+\subsubsection{}
+$k \le \dfrac{r^2}{\gamma^2}$, where $r \ge ||f||_2 \ \forall f \in \mathcal{D}$ and $\exists u, ||u||_2 = 1, \gamma \le |u^T f| \ \forall f \in \mathcal{D}$. \\
+Here, $f = [f_1 \ f_2 \ 1]$. \\
+So, $r = \sqrt{3}$ and if we take $u = \dfrac{[1 \ 1 \ -1.5]}{\sqrt{4.25}}$, then $\gamma = \dfrac{1}{\sqrt{17}}$. \\
+Thus, $k \le 51$.
+
 
 \end{document}
