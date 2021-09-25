@@ -128,4 +128,51 @@ So, $r = \sqrt{3}$ and if we take $u = \dfrac{[1 \ 1 \ -1.5]}{\sqrt{4.25}}$, the
 Thus, $k \le 51$.
 
 
+\newpage
+\section{LASSO and ISTA}
+\subsection{CS 337: Theory}
+\subsubsection{}
+Given $y_i = x_i . w + \epsilon_i$, where $\epsilon_i \sim^{iid} \mathcal{N}(0, \sigma^2)$ and $w_j \sim^{iid} Lasso(0, \theta)$.
+\begin{equation*}
+  \begin{aligned}
+    \mathbb{P}(\mathcal{D} | w) & \propto \exp \bigg( -\frac{\sum_{i=1}^n || y_i - x_i . w ||_2^2}{2 \sigma^2} \bigg)                         \\
+    \mathbb{P}(w)               & \propto \exp \bigg( -\frac{\sum_{j=1} |w_j|}{\theta} \bigg)                                                 \\
+                                & \propto \exp \bigg( -\frac{||w||_1}{\theta} \bigg)                                                          \\
+    \mathbb{P}(w | \mathcal{D}) & \propto \exp \bigg( -\frac{\sum_{i=1}^n || y_i - x_i . w ||_2^2}{2 \sigma^2} -\frac{||w||_1}{\theta} \bigg)
+  \end{aligned}
+\end{equation*}
+\begin{equation*}
+  \begin{aligned}
+    w_{\text{MAP}} & = \argmax_w \ \mathbb{P}(w | \mathcal{D})                                                                                                                              \\
+                   & = \argmax_w \ \exp \bigg( -\frac{\sum_{i=1}^n || y_i - x_i . w ||_2^2}{2 \sigma^2} -\frac{||w||_1}{\theta} \bigg)                                                      \\
+                   & = \argmin_w \ \bigg( \frac{\sum_{i=1}^n || y_i - x_i . w ||_2^2}{2 \sigma^2} + \frac{||w||_1}{\theta} \bigg)      & \text{($-\log(x)$ is a non-increasing function)}   \\
+                   & = \argmin_w \ \sum_{i=1}^n || y_i - x_i . w ||_2^2 + \lambda ||w||_1                                              & \bigg( \lambda := \frac{2 \sigma^2}{\theta} \bigg) \\
+                   & = \argmin_w \ L(w)
+  \end{aligned}
+\end{equation*}
+
+\subsubsection{}
+Referencing from the lecture slides and book by Tibshirani: \\
+As shown in Figure \ref{tibs}, the contours of the error and constrained functions meet at axes for $l_1$ norm unlike $l_2$ norm. \\
+This results in sparser weight vector as weights which are too closed to zero in OLS and Ridge are made zero here. \\
+We can also see that $l_2$ norm penalizes larger values of weights much more than $l_1$ norm, so in $l_2$ norm, having a small non-zero value is more likely than $l_1$ norm.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.25]{tibshirani_l1_l2.png}
+  \caption{Tibshirani Book: Page 71}
+  \label{tibs}
+\end{figure}
+
+\subsubsection{}
+Yes, a closed form for Lasso exists when the features are uncorrelated. \\
+We can see this from OLS also, there was a unique solution only when the features were linearly independent. \\
+Same way here, if the features are uncorrelated then there is a unique solution which can be found using subgradient methods (Referred to books and search). \\
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{wikipedia_lasso.png}
+  \caption{Wikipedia: Lasso (statistics)}
+  \label{tibs}
+\end{figure}
+
+
 \end{document}
