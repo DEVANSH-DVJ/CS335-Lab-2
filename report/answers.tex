@@ -82,6 +82,7 @@ Single classifier in 1-vs-1 uses subset of data, so each classifier is faster fo
                        & \le score(f, y')_{old}
   \end{aligned}
 \end{equation*}
+Hence, proved.
 
 \subsubsection{}
 \begin{equation*}
@@ -108,6 +109,7 @@ Gradient descent update:
 
 We can see that the gradient descent update rule is similar to perceptron update rule. \\
 Using the fact that the perceptron update rule converges for linearly separable dataset, we can conclude that gradient descent algorithm also converges for linearly separable dataset. \\
+Hence, proved. \\
 
 P.S. The loss function takes into account only a single data point. To be precise, we are doing stochastic gradient descent here.
 
@@ -150,6 +152,7 @@ Given $y_i = x_i . w + \epsilon_i$, where $\epsilon_i \sim^{iid} \mathcal{N}(0, 
                    & = \argmin_w \ L(w)
   \end{aligned}
 \end{equation*}
+Hence, proved.
 
 \subsubsection{}
 Referencing from the lecture slides and book by Tibshirani: \\
@@ -171,8 +174,37 @@ Same way here, if the features are uncorrelated then there is a unique solution 
   \centering
   \includegraphics[scale=0.3]{wikipedia_lasso.png}
   \caption{Wikipedia: Lasso (statistics)}
-  \label{tibs}
 \end{figure}
 
+
+\newpage
+\section{Bias Variance Trade-of}
+\subsection{CS 337: Theory}
+\subsubsection{}
+As discussed in class, Model complexity increases $\implies$ Bias decreases and Variance increases and, Model complexity decreases $\implies$ Bias increases and Variance decreases
+\begin{enumerate}
+  \item[(a)] Increasing the value of $\lambda$ in lasso regression \\
+        $\implies$ Model complexity decreases \\
+        $\implies$ Bias increases and Variance decreases
+  \item[(b)] Increasing model complexity by adding more features of high degree \\
+        $\implies$ Bias decreases and Variance increases
+  \item[(c)] Reducing dimension by choosing only those subset of features which are of more importance \\
+        $\implies$ Model complexity decreases \\
+        $\implies$ Bias increases and Variance decreases
+\end{enumerate}
+
+\subsubsection{}
+Let the test point be $(x, y = f(x) + \epsilon)$, where $\epsilon \sim \mathcal{N}(0, \sigma^2)$
+\begin{equation*}
+  \begin{aligned}
+    \text{Mean Squared Error} & = \text{E} [ (\hat{f(x)} - y)^2 ]                                                                                                                                      \\
+                              & = \text{E} [ \hat{f(x)}^2 + y^2 - 2 \hat{f(x)} y ]                                                                                                                     \\
+                              & = \text{E} [(\hat{f(x)} - \overline{\hat{f(x)}})^2] + \overline{\hat{f(x)}}^2 + \text{E} [(y - f(x))^2] + f(x)^2 - 2 \overline{\hat{f(x)}} f(x)                        \\
+                              & \bigg[ \text{Using $\text{E} [X^2] = \text{E} [(X - \overline{X})^2] + \overline{X}^2$; $\text{E} [\hat{f(x)}] = \overline{\hat{f(x)}}$; $\text{E} [y] = f(x)$} \bigg] \\
+                              & = \text{E} [(\hat{f(x)} - \overline{\hat{f(x)}})^2] + (\overline{\hat{f(x)}} - f(x))^2 + \sigma^2                                                                      \\
+                              & = Variance(\hat{f(x)}) + Bias(\hat{f(x)})^2 + \text{irreducible noise variance}
+  \end{aligned}
+\end{equation*}
+Hence proved.
 
 \end{document}
