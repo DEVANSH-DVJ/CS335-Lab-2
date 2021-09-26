@@ -209,7 +209,7 @@ In other words, LASSO can be used for feature selection.
 
 
 \newpage
-\section{Bias Variance Trade-of}
+\section{Bias Variance Trade-off}
 \subsection{CS 337: Theory}
 \subsubsection{}
 As discussed in class, Model complexity increases $\implies$ Bias decreases and Variance increases and, Model complexity decreases $\implies$ Bias increases and Variance decreases
@@ -236,6 +236,36 @@ Let the test point be $(x, y = f(x) + \epsilon)$, where $\epsilon \sim \mathcal{
                               & = Variance(\hat{f(x)}) + Bias(\hat{f(x)})^2 + \text{irreducible noise variance}
   \end{aligned}
 \end{equation*}
+We can ignore the irreducible noise variance as it can not be reduced even with a perfect estimator. \\
+Therefore, Mean Squared Error can be written as sum of $Variance(\hat{f(x)})$ and $(Bias(\hat{f(x)})^2$. \\
 Hence proved.
+
+\subsection{CS 337: Lab}
+\subsubsection{}
+Code for the function \verb!gen_bais_variance()! updated in notebook.
+
+\subsubsection{}
+Code for the function \verb!driver()! updated in notebook.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{bias.png}
+  \caption{Bias Vs Lambda}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{variance.png}
+  \caption{Variance Vs Lambda}
+\end{figure}
+
+Bias is almost zero for OLS, slightly negative for LASSO and significantly negative for Ridge with increase in lambda. \\
+Variance is insignificant w.r.t square of Bias. \\
+On close observation, Variance decreases significantly for Ridge whereas is almost constant for OLS and LASSO. \\
+Overall, OLS has the best performance and it should be as we have a linear data model and linear predicted model. \\
+LASSO underfits slightly as lambda increases because of $l_1$ constraint on weight. \\
+Ridge underfits significantly as lambda increases because of $l_2$ constraint on weight. \\
+
+\subsubsection{}
+Code for the functions \verb!ridge()!, \verb!lasso()!, \verb!ols()! updated in notebook.
+
 
 \end{document}
