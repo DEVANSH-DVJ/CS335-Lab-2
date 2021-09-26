@@ -184,6 +184,29 @@ Same way here, if the features are uncorrelated then there is a unique solution 
   \caption{Wikipedia: Lasso (statistics)}
 \end{figure}
 
+\subsection{CS 337: Lab}
+\subsubsection{}
+Code for the function \verb!ista()! updated in notebook.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{lasso_0.01.png}
+  \caption{LASSO Regression - ISTA (\texttt{epochs}=10000, \texttt{lr}=1e-2, \texttt{lamda}=0.01)}
+\end{figure}
+
+\subsubsection{}
+Code for the functions \verb!mse_multi_var()!, \verb!mse_regularized()!, \verb!split_data()!, \\ \verb!multivar_reg_closedform()! updated in notebook.
+
+\subsubsection{}
+If we take \texttt{lamda}=0.5, then the second and fourth features (index=1, 3) have weights close to zero for Ridge and exactly zero for LASSO. \\
+This shows that LASSO is able to completely ignore relatively redundant features. \\
+In other words, LASSO can be used for feature selection.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{weights_0.5.png}
+  \caption{Weights for Ridge and LASSO (\texttt{lamda}=0.5)}
+\end{figure}
+
 
 \newpage
 \section{Bias Variance Trade-of}
